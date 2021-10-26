@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>Style Objects by Position</title>
+
+<link rel="stylesheet" href="../examples/assets/example.css">
+
+</head>
+<body>
+
+	<h1>Style Objects by Position</h1>
+	
+	<p>The objects fade out based on their distance to the earth center.</p>
+	
+	
+	<script>
+	
+	var myearth;
+
+	/* load miniature.earth.js after the page is loaded. */
+
+	window.addEventListener( 'load', function() {
+		var script = document.createElement( "script" );
+		script.src = "../miniature.earth.js";
+		document.body.appendChild( script );	
+	} );
+
+
+	window.addEventListener( "earthjsload", function() {
+
+		/* setup earth */
+		
+		myearth = new Earth( "myearth", {
+			location: { lat: 20, lng: 40  },
+			autoRotate : true
+			/* more earth options here */
+		} );
+		
+		
+		
+		
+		/* add objects when earth is ready */
+
+		myearth.addEventListener( "ready", function() {
+						
+			
+			// test images
+			
+			fading_objects.push(
+				myearth.addImage( {
+					location : { lat: 45, lng : 15 },
+					color: 'blue'
+				} )
+			);
+			
+		
+			fading_objects.push(
+				myearth.addImage( {
+					location : { lat: 30, lng : 30 },
+					color: 'red'
+				} )
+			);
+			
+			
+			fading_objects.push(
+				myearth.addImage( {
+					location : { lat: 40, lng : 55 },
+					color: 'green'
+				} )
+			);
+			
+			fading_objects.push(
+				myearth.addImage( {
+					location : { lat: -10, lng : -5 },
+					color: 'yellow'
+				} )
+			);
+			
+			fading_objects.push(
+				myearth.addImage( {
+					location : { lat: 15, lng : 5 },
+					color: 'cyan'
+				} )
+			);
+			
+		} );
+		
+		
+		
+		var fading_objects = [];
+		
+		// fading options
+		var start_angle = 10;
+		var end_angle = 60;
+		var fade_easing = 'in-quad';
+		
+		
+		myearth.addEventListener( 'change', function() {
+		
+			// fade objects based on distance to earth center
+			
+			for ( var i=0; i < fading_objects.length; i++ ) {
+			
+				var factor = ( Earth.getAngle(this.location, fading_objects[i].location) - start_angle ) / ( end_angle - start_angle );
+				if ( factor < 0 ) factor = 0;
+				else if ( factor > 1 ) factor = 1;
+				
+				factor = 1 - Earth.Animation.Easing[fade_easing]( factor );
+				
+				if ( factor == 0 ) {
+					fading_objects[i].visible = false;
+					
+				} else {
+					fading_objects[i].visible = true;
+					fading_objects[i].opacity = factor;
+					fading_objects[i].scale = 1.5 * factor;
+				
+				}
+			}			
+	
+		} );
+			
+		
+	} );
+	
+
+	</script>
+	
+	
+	<div style="max-width: 800px; margin: 2em auto;">
+		
+		<div id="myearth" class="earth-container"></div>		
+
+	</div>
+	
+</body>
+</html>

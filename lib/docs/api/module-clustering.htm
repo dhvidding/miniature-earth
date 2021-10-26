@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>Clustering Module</title>
+
+<link rel="stylesheet" href="../assets/docs.css">
+<script src="../assets/docs.js"></script>
+
+</head>
+<body  class="has-index">
+	<div id="wrapper">
+		
+		<h1>Clustering Module</h1>
+		
+		<p style="text-align:left; font-size:1.2em; max-width: 40em;">Creates collapsible groups of Markers, Sprites or Images.</p>
+		<p style="text-align:left; font-size:1.2em; max-width: 40em;"><a href="../../examples/multi-level-clustering.htm"><strong>Example: Multi-Level Clustering</strong></a></p>
+		
+		
+		<div id="docs">
+		
+			<h2>Usage</h2>
+			
+			<p>Load the file <strong>/modules/miniature.earth.clustering.js</strong> or copy the code to your script and customize it to your needs.</p>
+			
+
+
+			<h2>Methods</h2>
+			
+			
+				<h3>Earth.Clustering.enable( <var>earth</var> ) </h3>
+				<p>Enable clustering for this earth.</p>
+<code><pre>
+myearth.addEventListener( "ready", function() {
+
+	<strong>Earth.Clustering.enable( this );</strong>
+
+	/* add your objects and cluster them */
+
+} );
+</pre></code>
+			
+			
+			
+				<h3><em>EarthInstance</em>.cluster( <var>object</var>, <var>children</var> ) </h3>
+				<dl>
+				  <dt>object</dt><dd>(Marker/Sprite/Image) This object reveals its children on click (if hotspot: true).<br>
+				  If no location is given, the object is set to the average location of its children.</dd>
+				  <dt>children</dt><dd>(array) An array of objects. These objects are collapsed and hidden by default.</a></dd>
+				</dl>
+<code><pre>
+var my_cluster_marker = myearth.addMarker( {
+	mesh : "Pin3",
+	<strong>hotspot : true</strong>
+} );
+
+var child1 = myearth.addMarker( {
+	mesh : "Pin3",
+	location : { lat: -25, lng: 14 },
+	scale: 0.6
+} );
+
+var child2 = myearth.addMarker( {
+	mesh : "Pin3",
+	location : { lat: -21, lng: 10 },
+	scale: 0.6
+} );
+
+<strong>myearth.cluster(</strong> my_cluster_marker, [child1, child2] <strong>);</strong>
+</pre></code>
+
+
+			<h3><em>EarthInstance</em>.collapseAll() </h3>
+			<p>Collapses all clusters.</p>
+<code><pre>
+myearth.collapseAll();
+</pre></code>
+
+					
+		&nbsp;
+		
+
+			<h3><em>ObjectInstance</em>.expand()</h3>
+			<p>Shows the children of this cluster.</p>
+<code><pre>
+my_cluster_marker.expand();
+</pre></code>
+
+			<h3><em>ObjectInstance</em>.collapse()</h3>
+			<p>Hides the children of this cluster.</p>
+<code><pre>
+my_cluster_marker.collapse();
+</pre></code>
+
+									
+		&nbsp;
+		
+		</div><!--docs-->
+		
+	</div>
+</body>
+</html>

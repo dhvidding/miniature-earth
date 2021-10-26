@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>MapDraw Module</title>
+
+<link rel="stylesheet" href="../assets/docs.css">
+<script src="../assets/docs.js"></script>
+
+</head>
+<body  class="has-index">
+	<div id="wrapper">
+		
+		<h1>MapDraw Module</h1>
+		
+		<p style="text-align:left; font-size:1.2em; max-width: 40em;">Tools to draw on the map canvas.</p>
+		<p style="text-align:left; font-size:1.2em; max-width: 40em;"><a href="../../examples/drawing-on-the-map.htm"><strong>Example: Map Drawing Tools</strong></a></p>
+		
+		
+		<div id="docs">
+		
+			<h2>Usage</h2>
+			
+			<p>Load the file <strong>/modules/miniature.earth.mapdraw.js</strong> or copy the code to your script and customize it to your needs.</p>
+			
+				<h3>Earth.MapDraw.enable.enable( <var>earth</var> )</h3>
+				&nbsp;
+<code><pre>
+myearth.addEventListener( 'drawtexture', function( event ) {
+	
+	Earth.MapDraw.enable( this );
+	
+	this.drawPolygon(
+		bermuda_triangle,
+		{
+			color: 'RGBA(0,255,0,0.2)'
+		}
+	);
+	
+};
+</pre></code>
+
+			<h2>Methods</h2>
+			
+
+
+
+				<h3><em>EarthInstance</em>.drawLine( <var>locations</var>, <var>style</var> )</h3>
+				<dl>
+				  <dt>locations</dt><dd>(array) Array of lat/lng objects.</dd>
+				  <dt>style</dt><dd>(object) Object of drawing options:<br>
+									strokeColor | default: #FF0000<br>
+									strokeWidth | default: 1</a></dd>
+				</dl>
+				
+				<p>Draws lines between the given locations.</p>
+				
+				
+				<h3 class="prop-group"><em>EarthInstance</em>.drawPolygon( <var>locations</var>, <var>style</var> )</h3>
+				<dl>
+				  <dt>locations</dt><dd>(array) Array of lat/lng objects.</dd>
+				  <dt>style</dt><dd>(object) Object of drawing options:<br>
+									color | default: RGBA(255,0,0,0.25)<br>
+									strokeColor | default: #FF0000<br>
+									strokeWidth | default: 0</a></dd>
+				</dl>
+				
+				<p>Like <em>drawLine</em> but also draws a line from frist to last location and can be filled with a color.</p>
+				
+
+
+				<h3 class="prop-group"><em>EarthInstance</em>.drawPoint( <var>location</var>, <var>style</var> )</h3>
+				<dl>
+				  <dt>location</dt><dd>(lat/lng) The location of the point.</dd>
+				  <dt>style</dt><dd>(object) Object of drawing options:<br>
+									color | default: #FF0000<br>
+									size | default: 1</a></dd>
+				</dl>
+				<p>Draws a point while compensating for the map projection/distortion.</p>
+				
+				
+
+				<h3><em>EarthInstance</em>.loadMapLayer( <var>image_url</var> )</h3>
+				<dl>
+				  <dt>image_url</dt><dd>(URL string) Provide a URL to an image from the same domain or use a dataURI.
+					The SVG format is recommended but it is also possible to use a PNG as a layer.</dd>
+				</dl>
+				
+				
+				<p>The image must be in 2:1 format, with <a href="https://en.wikipedia.org/wiki/Equirectangular_projection">equirectangular projection</a>.</p>
+				
+				&nbsp;
+
+
+
+				<div class="hint">
+					If you draw on the map after the <a href="earth.htm#drawtexture">drawtexture</a> event, you must call <em>EarthInstance</em>.<a href="earth.htm#updatemap">updateMap()</a> to apply the updated map.
+				</div>
+						
+		&nbsp;
+		
+		</div><!--docs-->
+		
+	</div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>3D Assets - Loading of .obj/.mtl files</title>
+
+<link rel="stylesheet" href="../assets/example.css">
+
+<script src="../../miniature.earth.js"></script>
+<script src="../assets/cube/obj-loader.js"></script>
+
+<script>
+
+
+window.addEventListener( "earthjsload", function() {
+
+
+	myearth = new Earth( "myearth", {
+		location: { lat: 0, lng: 0 },
+		zoomable: true
+	} );	
+	
+	
+	myearth.addEventListener( "ready", function() {
+	
+	
+		// add empty marker as placeholder
+		
+		var marker = this.addMarker({
+			mesh : "",
+			location: { lat: 30, lng: 20 },
+			offset: 0
+		});
+		marker.animate( 'location', { lat: 0, lng: 0 }, {duration: 3000, loop: true, oscillate: true} );
+		
+	
+	
+		loadObjFile(
+			'../assets/cube/',	// path to the assets with slash at end
+			'cube.obj',			// .obj filename
+			'cube.mtl',			// .mtl filename
+			function ( cube ) {		// callback function with the object as first parameter
+			
+			
+				// add cube to marker
+				
+				marker.object3d.add( cube );
+				
+				
+				// add a cube clone to camera (fixed in view)
+				
+				var cube2 = cube.clone();
+				
+				myearth.camera.add( cube2 );
+				cube2.position.set(-4, -4, -14);
+						
+				
+			}
+		);
+		
+		
+		
+	} );
+
+	
+} );
+
+
+
+
+</script>
+
+</head>
+<body>
+
+	<h1 style="padding-bottom: 1em;">3D Assets <br> Loading of .obj/.mtl files</h1>
+		
+	<div id="wrapper">
+	
+		<div id="myearth"></div>
+		
+	</div>
+	
+</body>
+</html>

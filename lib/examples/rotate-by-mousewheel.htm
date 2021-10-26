@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>Rotate by Mousewheel</title>
+
+<link rel="stylesheet" href="assets/example.css">
+
+
+<script src="../miniature.earth.js"></script>
+<script src="../modules/miniature.earth.input.js"></script>
+
+<script>
+
+document.addEventListener( "DOMContentLoaded", function() {
+
+
+	var myearth = new Earth( "myearth", {
+		location: { lat: 10, lng: -80 },
+		dragDamping : 0.9
+	} );
+	
+	
+	myearth.addEventListener( "ready", function() {
+		
+		Earth.Input.MouseWheel.enable( this );		
+		
+	} );
+
+
+} );
+
+</script>
+
+</head>
+<body>
+
+	<h1>Rotate by Mousewheel</h1>
+	
+	<p id="info">
+		See <a href="../docs/api/module-input.htm">Input Module</a><br>
+		Use your mousewheel to rotate the earth.
+	</p>
+	
+	
+	<div id="wrapper">
+		<div id="myearth"></div>		
+	</div>
+	
+</body>
+</html>

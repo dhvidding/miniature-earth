@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>THREE.js Objects and Lights</title>
+
+<link rel="stylesheet" href="../assets/example.css">
+
+<script src="../../miniature.earth.js"></script>
+
+<script>
+
+
+window.addEventListener( "earthjsload", function() {
+
+
+	myearth = new Earth( "myearth", {
+		location: { lat: 0, lng: 0 },
+		light: 'none',
+		lightAmbience : 0.6,
+		zoomable: true,
+		mapSeaColor : '#AAA'
+	} );	
+	
+	
+	myearth.addEventListener( "ready", function() {
+	
+
+		// blue / fixed in view
+	
+		var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+		var material = new THREE.MeshPhongMaterial( {color: 0x0000ff} );
+		var cube = new THREE.Mesh( geometry, material );
+		this.camera.add( cube );
+		cube.position.set(-4, -4, -15);
+		
+		var directionalLight = new THREE.DirectionalLight( 0x0000ff, 0.5 );
+		this.camera.add( directionalLight );
+		directionalLight.position.set(-40, -40, -15);
+				
+			
+		
+		// green / within scene
+		
+		var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+		var material = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
+		var cube = new THREE.Mesh( geometry, material );
+		this.scene.add( cube );
+		cube.position.set(0, 0, -9);
+		
+		var light = new THREE.PointLight( 0x00ff00, 2, 3 );
+		this.scene.add( light );
+		light.position.set(0, 0, -9);
+		
+		
+		
+		// red / within marker
+		
+		var marker = this.addMarker({
+			mesh : "",
+			location: { lat: 30, lng: 20 },
+			offset: 0.5
+		});
+		marker.animate( 'location', { lat: 25, lng: 50 }, {duration: 3000, loop: true, oscillate: true} );
+		
+		
+		var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+		var material = new THREE.MeshPhongMaterial( {color: 0xff0000} );
+		var cube = new THREE.Mesh( geometry, material );
+		marker.object3d.add( cube );
+		
+		var light = new THREE.PointLight( 0xff0000, 2, 3 );
+		marker.object3d.add( light );
+		light.position.set( 0, 1.5, 0 );
+		
+		
+		
+	} );
+
+	
+} );
+
+
+
+
+</script>
+
+</head>
+<body>
+
+	<h1 style="padding-bottom: 1em;">THREE.js Objects and Lights</h1>
+	
+	<p>
+	The <span style="color:blue">blue</span> cube/light is attached to the camera so it is fixed in the view.<br>
+	The <span style="color:green">green</span> cube/light is attached to the scene, it scales/rotates with the earth.<br>
+	The <span style="color:red">red</span> cube/light is attached to an empty marker, it moves/scales/rotates with the marker.</p>
+	
+	<div id="wrapper">
+	
+		<div id="myearth"></div>
+		
+	</div>
+	
+</body>
+</html>

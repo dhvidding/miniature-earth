@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>SliderSync Module</title>
+
+<link rel="stylesheet" href="../assets/docs.css">
+<script src="../assets/docs.js"></script>
+
+</head>
+<body  class="has-index">
+	<div id="wrapper">
+		
+		<h1>SliderSync Module</h1>
+		
+		<p style="text-align:left; font-size:1.2em; max-width: 40em;">Synchronizes a <a href="https://swiperjs.com/" target="_blank">Swiper</a> slider with earth locations. You can modify the code for use with other slider libraries.</p>
+		<p style="text-align:left; font-size:1.2em; max-width: 40em;"><a href="../../examples/slider-sync.htm"><strong>Example: Sync with Slider</strong></a>
+		</p>
+		
+		<div id="docs">
+		
+			<h2>Usage</h2>
+			
+			<p>Load the file <strong>/modules/miniature.earth.scrollsync.js</strong> or copy the code to your script and customize it to your needs.</p>
+			
+
+
+			<h2>Methods</h2>
+			
+		
+			<h3>Earth.SliderSync.enable( <var>earth</var>, <var>slider</var>, <var>activate</var> )</h3>
+			<dl>
+			  <dt>earth</dt><dd>(EarthInstance) Reference to the earth</dd>
+			  <dt>slider</dt><dd>(Swiper) Slider instance </dd>
+				<div class="hint" style="margin-left:0">
+					You can add data attributes to the slides and access them during the <em>activate</em> callback.
+				</div>
+			  </dd>
+			  <dt>activate</dt><dd>(function) Callback function to handle the change of the active slide.<br>The first parameter gives you the activated slide.<br>The second parameter gives you the deactivated slide. </dd>
+			</dl>
+			<code><pre>
+myearth.addEventListener( "ready", function() {
+	
+	var elements = [];
+	
+	document.querySelectorAll('.sections').forEach( function(item) {
+
+		var latlng = item.dataset.location.split(',');
+	
+		var marker = myearth.addMarker( {
+			location : { lat: latlng[0], lng: latlng[1] }				
+		} );
+	
+		elements.push( {
+			element : item,
+			location : { lat: latlng[0], lng: latlng[1] },
+			marker : marker	// custom variable
+		} );
+		
+	} );
+	
+	
+	Earth.SliderSync.enable(
+		// earth
+		myearth,
+		
+		// container
+		document.documentElement,
+		
+		// elements
+		elements,
+		
+		// activate
+		function(new_element, old_element) {
+			if (new_element) {
+				new_element.marker.color = 'green';
+				new_element.element.classList.add('active');
+			}
+			if (old_element) {
+				old_element.marker.color = 'red';
+				old_element.element.classList.remove('active');
+			}
+		}
+	);
+
+} );
+</pre></code>
+			
+		
+			
+		&nbsp;
+		
+		</div><!--docs-->
+		
+	</div>
+</body>
+</html>

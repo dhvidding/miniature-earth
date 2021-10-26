@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>TextImage Module</title>
+
+<link rel="stylesheet" href="../assets/docs.css">
+<script src="../assets/docs.js"></script>
+
+</head>
+<body  class="has-index">
+	<div id="wrapper">
+		
+		<h1>TextImage Module</h1>
+		
+		<p style="text-align:left; font-size:1.2em; max-width: 40em;">Creates images of text for use with Sprite and Image objects.</p>
+		<p style="text-align:left; font-size:1.2em; max-width: 40em;"><a href="../../examples/text-images.htm"><strong>Example: Text Images</strong></a></p>
+		
+		
+		<div id="docs">
+		
+			<h2>Usage</h2>
+			
+			<p>Load the file <strong>/modules/miniature.earth.textimage.js</strong> or copy the code to your script and customize it to your needs.</p>
+			
+
+
+			<h2>Methods</h2>
+			
+
+
+
+				<h3>Earth.TextImage.draw( <var>text</var>, <var>options</var> )</h3>
+				<dl>
+				  <dt>text</dt><dd>(string) The text to be drawn. Use <strong>\n</strong> for a line break.</dd>
+				  <dt>options</dt><dd>(object) Object of text style options:<br>
+					fontFamily	| default: sans-serif<br>
+					fontWeight	| default: ""<br>
+					fontStyle	| default: ""<br>
+					lineHeight	| default: 1<br>
+					quality		| default: 1</a></dd>
+				</dl>
+				
+				<p>Returns an object with <em>image</em>, <em>scale</em> and <em>resolution</em> for use with Sprite and Image objects.</p>
+				
+<code><pre>
+var text_image = <strong>Earth.TextImage.draw</strong>(
+	'North\nAmerica',
+	{
+		fontFamily : 'MyFont, sans-serif',
+		fontWeight : 'bold'
+	}
+);
+
+myearth.addImage( {
+	location : { lat: 39, lng : -98 },
+	image : <strong>text_image.image</strong>,
+	scale: <strong>text_image.scale</strong> * 0.8,
+	imageResolution : <strong>text_image.resolution</strong>,
+	color: '#333'
+} );
+</pre></code>
+
+		
+		&nbsp;
+
+				<div class="hint">
+					If you use a custom font, it must be loaded when drawing the TextImage. You are safe after the <em>window.load</em> event.
+				</div>
+						
+		&nbsp;
+		
+		</div><!--docs-->
+		
+	</div>
+</body>
+</html>

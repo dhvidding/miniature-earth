@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>Overlay Styles</title>
+
+<link rel="stylesheet" href="../examples/assets/example.css">
+
+<style>
+
+/* bubble tip */
+
+.bubble-tip {
+	background-color: white;
+	padding: 0.8em 1em;
+	border-radius: 0.25em;
+	text-align: left;
+	max-width: 20em;
+	filter: drop-shadow( 0 1px 2px RGBA(0,0,0,0.5) );
+	transform: translate(-50%, 0%) translateY(0.35em);
+	transition: transform 0.4s ease;
+}
+.bubble-tip::after {
+	content: "";
+	background-color: white;
+	position: absolute;
+	left: 50%;
+	top: 0%;
+	width: 0.5em;
+	height: 0.5em;
+	transform: translate(-0.25em, -0.25em) rotate(45deg);
+	transition: top 0.4s ease;	
+}
+.earth-overlay-top > .bubble-tip {
+	transform: translate(-50%, -100%) translateY(-0.35em);
+}
+.earth-overlay-top > .bubble-tip::after {
+	top: 100%;
+}
+.bubble-tip > span {
+	display: inline-block;
+	position: relative;
+	z-index: 1;
+}
+
+
+/* tooltip */
+
+.tooltip {
+	background-color: RGBA(0,0,0,0.6);
+	text-shadow: 0 0 2px black;
+	color: white;
+	padding: 0.25em 0.5em;
+	border-radius: 0.75em 0 0.75em 0.75em;
+	font-size: 1.5em;
+	transition: border-radius 0.3s ease, transform 0.3s ease;
+	transform: translateX(-100%);
+}
+.earth-overlay-left > .tooltip {
+	border-radius: 0 0.75em 0.75em 0.75em;
+	transform: none;
+}
+.earth-occluded > .tooltip {
+	display: none;
+}
+
+
+/* text-tip */
+
+.text-tip {
+	margin: -4px 0 0 -4px;
+	width: 8px;
+	height: 8px;
+	background-color: black;
+	border-radius: 50%;
+}
+.text-tip span {
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	transition: opacity 0.25s ease, transform 0.25s ease;
+	white-space: nowrap;
+	font-weight: bold;
+	font-size: 1.5em;
+	transform: translate(-50%, -50%) translateY(0.7em);
+}
+.earth-overlay-top .text-tip span {
+	transform: translate(-50%, -50%) translateY(-1em);
+}
+.earth-occluded > .text-tip span {
+	opacity: 0;
+}
+
+
+/* arrow-tip */
+
+.arrow-tip {
+	background-color: red;
+	color: white;
+	padding: 0.5em 0.75em 0.5em 1.75em;
+	font-size: 1.5em;
+	clip-path: polygon(1.25em 0, 100% 0, 100% 50%, 100% 100%, 1.25em 100%, 0 50%);
+	transition: clip-path 0.3s ease, padding 0.3s ease, transform 0.3s ease;
+	transform: translate(0, -50%); /* rotate(-90deg);
+	transform-origin: left center; */
+}
+.earth-overlay-left > .arrow-tip {
+	padding: 0.5em 1.75em 0.5em 0.75em;
+	clip-path: polygon(0% 0%, calc(100% - 1.25em) 0%, 100% 50%, calc(100% - 1.25em) 100%, 0% 100%, 0% 50%);
+	transform: translate(-100%, -50%);
+}
+
+
+/* flag-tip */
+
+.flag-tip {
+	background-color: green;
+	color: white;
+	padding: 0.75em 0.8em;
+	max-width: 15em;
+	transform: translateY(-100%) translateY(-2em) scale(1);
+	transform-origin: left bottom;
+	transition: transform 0.3s ease;
+	font-size: 1.2em;
+}
+.flag-tip::before {
+	content: "";
+	background-color: black;
+	width: 2px;
+	top: 0;
+	left: 0;
+	position: absolute;
+	height: calc(100% + 2em);
+}
+.earth-occluded > .flag-tip {
+	transform: translateY(-100%) translateY(0) scale(0.001);
+}
+
+
+/* hotspot-tip */
+
+.hotspot-tip {
+	position: relative;
+	margin: -2em 0 0 -2em;
+	width: 4em;
+	height: 4em;
+	border: 2px cyan solid;
+	border-radius: 50%;
+	box-sizing: border-box;
+	
+	pointer-events: all;
+	cursor: pointer;
+	transition: font-size 0.2s ease, background-color 0.2s ease;
+}
+.hotspot-tip:hover {
+	font-size: 2em;
+	background-color: RGBA(0,0,0,0.5);
+}
+.hotspot-tip span {
+	position: absolute;
+	top: 50%;
+	left: 10%;
+	width: 80%;
+	transform: translateY(-50%);
+	text-align: center;
+	color: cyan;
+	font-size: 0.7em;
+	opacity: 0;
+	transition: opacity 0.2s ease;
+}
+.hotspot-tip:hover span {
+	opacity: 1;
+}
+
+</style>
+
+<script src="../miniature.earth.js"></script>
+
+<script>
+
+window.addEventListener( "earthjsload", function() {
+
+	myearth = new Earth( "myearth", {
+		location: { lat: 0, lng: 0 },
+		zoomable: true
+	} );
+	
+	
+	
+	myearth.addEventListener( "click", function(e) {
+		console.log( e.location );
+		});
+	
+	myearth.addEventListener( "ready", function() {
+		
+		// add overlays
+		
+		this.addOverlay( {
+			content: '<span>Bubble Tip <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiM5OTkiIGQ9Ik0yNCAyNGgtMjR2LTI0aDI0djI0em0tMi0yMmgtMjB2MjBoMjB2LTIwem0tNC4xMTggMTQuMDY0Yy0yLjI5My0uNTI5LTQuNDI3LS45OTMtMy4zOTQtMi45NDUgMy4xNDYtNS45NDIuODM0LTkuMTE5LTIuNDg4LTkuMTE5LTMuMzg4IDAtNS42NDMgMy4yOTktMi40ODggOS4xMTkgMS4wNjQgMS45NjMtMS4xNSAyLjQyNy0zLjM5NCAyLjk0NS0yLjA0OC40NzMtMi4xMjQgMS40OS0yLjExOCAzLjI2OWwuMDA0LjY2N2gxNS45OTNsLjAwMy0uNjQ2Yy4wMDctMS43OTItLjA2Mi0yLjgxNS0yLjExOC0zLjI5eiIvPjwvc3ZnPg" style="width:6em;height:6em;display:block;margin:0.5em 0;"><a href="#">Link</a></span>',
+			location : { lat: 27, lng: -80.7 },
+			className : 'bubble-tip'
+		} );
+		
+		
+		this.addOverlay( {
+			content: 'Tooltip',
+			location : {lat: 35, lng: 140},
+			className : 'tooltip',
+			depthScale: 0.4
+		} );
+		
+		
+		this.addOverlay( {
+			location : {lat: 21, lng: 31},
+			content: '<span>Text Tip</span>',
+			className : 'text-tip'
+		} );
+		
+		
+		this.addOverlay( {
+			content: 'Flag Tip',
+			location : {lat: 6.96, lng: 80.72},
+			offset: -0.05,
+			className : 'flag-tip',
+			depthScale: 0.33
+		} );
+		
+		
+		this.addOverlay( {
+			content: 'Arrow Tip',
+			location : {lat: 37.8, lng: 13},
+			depthScale: 0.25,
+			className : 'arrow-tip'
+		} );
+		
+		
+		this.addOverlay( {
+			content: '<span>Hotspot Tip</span>',
+			location : {lat: 20.4, lng: -156.5},
+			depthScale: 0.33,
+			className : 'hotspot-tip'
+		} );
+		
+		
+	} );
+	
+	
+} );
+
+
+</script>
+
+</head>
+<body>
+	<h1>Overlay Styles</h1>
+	
+	<p>Possible styles and inspiration for your Overlays.</p>
+	
+	<div id="wrapper">		
+	
+		<div id="myearth"></div>
+		
+	</div>
+</body>
+</html>

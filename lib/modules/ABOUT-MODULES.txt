@@ -1,0 +1,3 @@
+Load a module file via <script>-tag or copy the code to your script.
+Feel free to extend the code and adapt it to your needs!
+See docs/api/module-... for further information.

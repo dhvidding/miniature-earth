@@ -1,0 +1,34 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+	background: white;
+	color: black;
+	font-family: sans-serif;
+}
+
+
+#myearth {
+	overflow: hidden;
+  background: radial-gradient(ellipse at center, rgba(117,0,192,0.05) 35%,rgba(117,0,192,0.15) 53%,rgba(117,0,192,0.05) 56%,rgba(117,0,192,0) 70%);
+  height: 600px;
+  width: 600px;
+	opacity: 0;
+	transition: opacity 1.5s ease-in;
+}
+
+#myearth.earth-ready {
+	opacity: 1;
+}
+
+#myearth::before {
+	content: none;
+}
+
+.intro-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+

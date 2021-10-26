@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>Sync with Slider</title>
+
+<link rel="stylesheet" href="assets/example.css">
+<link rel="stylesheet" href="assets/swiper.min.css">
+<script type="text/javascript" src="assets/swiper.min.js"></script>
+<script type="text/javascript" src="../modules/miniature.earth.slidersync.js"></script>
+
+<style>
+
+#columns {
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: row;
+	flex-direction: row;
+	-webkit-flex-wrap: nowrap;
+	flex-wrap: nowrap;
+	-webkit-justify-content: space-between;
+	justify-content: space-between;
+	-webkit-align-items: center;
+	align-items: center;
+
+	max-width: 60em;
+	margin: 0 auto;
+}
+
+#container-column,
+#earth-column {
+	width: 50%;
+}
+
+.swiper-container {
+	border: 1px black dotted;
+	width: 100%;
+	height: 26em;	
+}
+
+.swiper-slide h2 {
+	padding-top: 5em;
+	border-bottom: 0;
+}
+.swiper-slide big {
+	display: block;
+	font-weight: bold;
+	font-size: 6em;
+}
+.swiper-slide:nth-child(even) {
+	background-color: #eee;
+}
+
+</style>
+
+<script>
+
+var mySwiper;
+
+document.addEventListener( "DOMContentLoaded", function(){
+	mySwiper = new Swiper('.swiper-container', {
+
+		loop: true,
+		grabCursor: true,
+
+		pagination: {
+		  el: '.swiper-pagination',
+		},
+
+		navigation: {
+		  nextEl: '.swiper-button-next',
+		  prevEl: '.swiper-button-prev',
+		}
+
+	});
+});
+
+
+var myearth;	
+
+/* load miniature.earth.js after the page is loaded. */
+
+window.addEventListener( 'load', function() {
+	var script = document.createElement( "script" );
+	script.src = "../miniature.earth.js";
+	document.body.appendChild( script );	
+} );
+
+
+window.addEventListener( "earthjsload", function() {
+
+	/* setup earth */
+	
+	myearth = new Earth( "myearth", {
+		/* more earth options here */
+	} );
+	
+	
+	myearth.addEventListener( "ready", function() {
+		
+		// add markers
+		document.querySelectorAll('.swiper-slide:not(.swiper-slide-duplicate)').forEach( function(slide) {
+
+			// set location object from data attribute string
+			var latlng = slide.dataset.location.split(',');
+			slide.location = { lat: latlng[0], lng: latlng[1] };
+		
+			slide.marker = myearth.addMarker( {
+				location : { lat: latlng[0], lng: latlng[1] }				
+			} );
+			
+		} );
+		
+		Earth.SliderSync.enable( this, mySwiper, function( new_slide, old_slide ) {
+			console.log( new_slide );
+			if ( new_slide ) {
+				new_slide.marker.color = 'green';
+			}
+			if ( old_slide ) {
+				old_slide.marker.color = 'red';
+			}
+		} );
+	
+	} );	
+
+	
+	
+} );
+
+
+</script>
+
+</head>
+<body>
+
+	<h1>Sync with Slider</h1>
+	<p>See <a href="../docs/api/module-slidersync.htm">SliderSync Module</a><br>
+	Use the slider to rotate the earth or drag the earth to change slides.</p>
+	
+		
+	<div id="columns">
+		<div id="earth-column">
+			
+			<div id="myearth" class="earth-container" style="width: 100%;"></div>		
+
+		</div>
+		
+		<div id="container-column">
+		
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+				
+					<!-- Slides -->
+					<div class="swiper-slide" data-location="40.4380637,-3.7497477"><h2>Spain <big>1</big></h2></div>
+					<div class="swiper-slide" data-location="40.689,-74.046"><h2>New York <big>2</big></h2></div>
+					<div class="swiper-slide" data-location="34.0311504,-118.3289974"><h2>California <big>3</big></h2></div>
+					<div class="swiper-slide" data-location="21.3198546,-157.9353933"><h2>Hawaii <big>4</big></h2></div>
+					<div class="swiper-slide" data-location="35.6693859,139.6009549"><h2>Japan <big>5</big></h2></div>
+					<div class="swiper-slide" data-location="13.7248934,100.492684"><h2>Thailand <big>6</big></h2></div>
+					<div class="swiper-slide" data-location="-1.3030364,36.7771854"><h2>Kenya <big>7</big></h2></div>
+
+				</div>
+				
+				<div class="swiper-pagination"></div>
+
+				<div class="swiper-button-prev"></div>
+				<div class="swiper-button-next"></div>
+				
+			</div><!-- swiper-container -->
+		
+		</div>
+	</div>	
+	
+</body>
+</html>

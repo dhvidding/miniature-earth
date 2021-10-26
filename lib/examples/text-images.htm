@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>Text Images</title>
+
+<link rel="stylesheet" href="../examples/assets/example.css">
+
+
+<script type="text/javascript" src="../modules/miniature.earth.textimage.js"></script>
+
+<style>
+
+@font-face {
+	font-family: 'Kalam';
+	src: url('assets/Kalam-Bold.ttf') format('truetype');
+	font-weight: bold;
+}
+
+</style>
+
+<script>
+
+var myearth, custom_regions_image;
+
+/* load miniature.earth.js after the page is loaded. */
+
+window.addEventListener( 'load', function() {
+	var script = document.createElement( "script" );
+	script.src = "../miniature.earth.js";
+	document.body.appendChild( script );	
+} );
+
+
+window.addEventListener( "earthjsload", function() {
+
+	/* setup earth */
+	
+	myearth = new Earth( "myearth", {
+		location: { lat: 18, lng: -66  },
+		autoRotate: true
+		/* more earth options here */
+	} );
+	
+	
+	
+	var fading_images = [];
+	
+	myearth.addEventListener( 'change', function() {
+	
+		for ( var i=0; i < fading_images.length; i++ ) {
+		
+			var factor = Earth.getAngle( this.location, fading_images[i].location ) / 50 - 0.3;
+			if ( factor < 0 ) factor = 0;
+
+			if ( factor >= 1 ) { // invisible
+				fading_images[i].visible = false;
+			} else {
+				fading_images[i].visible = true;
+				// fade out faster at edge
+				factor = Earth.Animation.Easing['out-quad']( factor );
+				fading_images[i].opacity = 1 - factor;
+			}
+		}
+	
+	} );
+	
+	
+	/* add objects when earth is ready */
+
+	myearth.addEventListener( "ready", function() {
+
+
+		// North America
+
+		var text_image = Earth.TextImage.draw( 'North\nAmerica', {
+			fontFamily : 'Kalam, sans-serif',
+			fontWeight : 'bold'
+		} );
+
+		var image = myearth.addImage( {
+			location : { lat: 39, lng : -98 },
+			image : text_image.image,
+			scale: text_image.scale * 0.8,
+			imageResolution : text_image.resolution,
+			color: '#333'
+		} );
+
+		fading_images.push( image );
+
+
+		// South America
+
+		var text_image = Earth.TextImage.draw( 'South\nAmerica', {
+			fontFamily : 'Kalam, sans-serif',
+			fontWeight : 'bold'
+		} );
+
+		var image = myearth.addImage( {
+			location : { lat: -15, lng : -57 },
+			image : text_image.image,
+			scale: text_image.scale * 0.8,
+			imageResolution : text_image.resolution,
+			color: '#333'
+		} );
+
+		fading_images.push( image );
+
+
+
+		// Africa
+
+		var text_image = Earth.TextImage.draw( 'Africa', {
+			fontFamily : 'Kalam, sans-serif',
+			fontWeight : 'bold'
+		} );
+
+		var image = myearth.addImage( {
+			location : { lat: 5, lng : 26 },
+			image : text_image.image,
+			scale: text_image.scale * 0.8,
+			imageResolution : text_image.resolution,
+			color: '#333'
+		} );
+
+		fading_images.push( image );	
+
+
+
+		// Europe
+
+		var text_image = Earth.TextImage.draw( 'Europe', {
+			fontFamily : 'Kalam, sans-serif',
+			fontWeight : 'bold'
+		} );
+
+		var image = myearth.addImage( {
+			location : { lat: 49, lng : 11 },
+			image : text_image.image,
+			scale: text_image.scale * 0.8,
+			imageResolution : text_image.resolution,
+			color: '#333'
+		} );
+
+		fading_images.push( image );
+
+
+
+		// Asia
+
+		var text_image = Earth.TextImage.draw( 'Asia', {
+			fontFamily : 'Kalam, sans-serif',
+			fontWeight : 'bold'
+		} );
+
+		var image = myearth.addImage( {
+			location : { lat: 41, lng : 87 },
+			image : text_image.image,
+			scale: text_image.scale * 0.8,
+			imageResolution : text_image.resolution,
+			color: '#333'
+		} );
+
+		fading_images.push( image );
+
+
+
+		// Australia
+
+		var text_image = Earth.TextImage.draw( 'Australia', {
+			fontFamily : 'Kalam, sans-serif',
+			fontWeight : 'bold'
+		} );
+
+		var image = myearth.addImage( {
+			location : { lat: -25, lng : 134 },
+			image : text_image.image,
+			scale: text_image.scale * 0.8,
+			imageResolution : text_image.resolution,
+			color: '#333'
+		} );
+
+		fading_images.push( image );
+
+
+
+
+		// Atlantic Ocean
+
+		var text_image = Earth.TextImage.draw( 'Atlantic\nOcean', {
+			fontFamily : 'Kalam, sans-serif',
+			fontWeight : 'bold'
+		} );
+
+		var image = myearth.addImage( {
+			location : { lat: 23, lng : -43 },
+			image : text_image.image,
+			scale: text_image.scale * 0.6,
+			imageResolution : text_image.resolution,
+			color: '#c7e6fb'
+		} );
+
+		fading_images.push( image );
+
+
+
+		// Pacific Ocean
+
+		var text_image = Earth.TextImage.draw( 'Pacific Ocean', {
+			fontFamily : 'Kalam, sans-serif',
+			fontWeight : 'bold'
+		} );
+
+		var image = myearth.addImage( {
+			location : { lat: 8, lng : -168 },
+			image : text_image.image,
+			scale: text_image.scale * 0.6,
+			imageResolution : text_image.resolution,
+			color: '#c7e6fb'
+		} );
+
+		fading_images.push( image );
+
+
+
+		// Indian Ocean
+
+		var text_image = Earth.TextImage.draw( 'Indian Ocean', {
+			fontFamily : 'Kalam, sans-serif',
+			fontWeight : 'bold'
+		} );
+
+		var image = myearth.addImage( {
+			location : { lat: -13, lng : 80 },
+			image : text_image.image,
+			scale: text_image.scale * 0.6,
+			imageResolution : text_image.resolution,
+			color: '#c7e6fb'
+		} );
+
+		fading_images.push( image );
+
+
+
+	} );
+	
+} );
+
+
+</script>
+
+
+</head>
+<body>
+
+	<h1>Text Images</h1>
+	
+	<p>See <a href="../docs/api/module-textimage.htm">TextImage Module</a><br></p>
+		
+	<div style="max-width: 800px; margin: 2em auto;">
+		
+		<div id="myearth" class="earth-container"></div>		
+
+		<!-- force loading of the font if not used on the page -->
+		<span style="font-family: Kalam, sans-serif; font-weight: bold; position: absolute;">&nbsp;</span>
+		
+	</div>
+	
+</body>
+</html>

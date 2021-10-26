@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>Drawing on the Map</title>
+
+<link rel="stylesheet" href="../examples/assets/example.css">
+
+<script src="../miniature.earth.js"></script>
+<script src="../modules/miniature.earth.mapdraw.js"></script>
+
+<script>
+
+
+window.addEventListener( "earthjsload", function() {
+
+
+	myearth = new Earth( "myearth", {
+		location: { lat: 20, lng: -85 },
+		mapBorderColor: '#0099FF'
+	} );
+	
+	
+	myearth.addEventListener( 'drawtexture', function( event ) {
+		
+		Earth.MapDraw.enable( this );
+		
+		
+		// map layer: US
+		
+		myearth.loadMapLayer( 'assets/united-states-layer.svg' );
+		
+		
+		// polygon: bermuda triangle
+		
+		this.drawPolygon( [
+				{lat: 18.416106722586832, lng: -64.81302591335609},
+				{lat: 31.059844751726885, lng: -65.87317246841712},
+				{lat: 25.563080590087488, lng: -79.79684091963034}
+			],
+			{
+				color: 'RGBA(255,0,0,0.2)',
+				strokeWidth: 0.75,
+				strokeColor: 'RGBA(255,0,0,0.5)'
+			}
+		);
+		
+		
+		// line: amazona river
+		
+		this.drawLine( [
+				{lat: -15.518, lng: -71.765},
+				{lat: -14.98, lng: -71.78},
+				{lat: -13.53, lng: -73.88},
+				{lat: -8.65, lng: -74.73},
+				{lat: -6.42, lng: -74.12},
+				{lat: -5.07, lng: -73.21},
+				{lat: -3.574, lng: -71.86},
+				{lat: -3.78, lng: -69.55},
+				{lat: -3.064, lng: -67.05},
+				{lat: -2.664, lng: -65.36},
+				{lat: -4.0, lng: -63.65},
+				{lat: -3.494, lng: -60.0},
+				{lat: -3.393, lng: -57.46},
+				{lat: -2.385, lng: -55.17},
+				{lat: -2.277, lng: -53.8},
+				{lat: -1.483, lng: -51.69},
+			],
+			{
+				strokeColor: 'RGBA(0,0,255)',
+				strokeWidth: 1.5
+			}
+		);
+		
+		
+		// point: equator
+		
+		for ( var i = -180; i <= 180; i+=5 ) {
+		
+			this.drawPoint(
+				{ lat: 0, lng: i },
+				{
+					size: 1.25,
+					color: 'RGBA(80,80,80,0.75)'
+				}
+			);
+		
+		}
+		
+		
+	} );
+	
+
+	myearth.addEventListener( 'ready', function( event ) {
+	
+		// text descriptions
+	
+		this.addOverlay( {
+			location : {lat: 37, lng: -113.9},
+			content : 'loadMapLayer<br><small>US Borders</small>',
+			className : 'docs-tip'
+		} );
+	
+		this.addOverlay( {
+			location : {lat: 26, lng: -52.5},
+			content : 'drawPolygon<br><small>Bermuda Triangle</small>',
+			className : 'docs-tip'
+		} );
+		
+		this.addOverlay( {
+			location : {lat: -8.5, lng: -61.4},
+			content : 'drawLine<br><small>Amazon River</small>',
+			className : 'docs-tip'
+		} );
+		
+		this.addOverlay( {
+			location : {lat: 8, lng: -105.1},
+			content : 'drawPoint<br><small>Equator</small>',
+			className : 'docs-tip'
+		} );
+		
+	} );
+	
+	
+	
+} );
+
+
+
+function drawMore() {
+
+	// caribbean sea (polygon)
+
+	myearth.drawPolygon( [
+		{lat: 27.585259235891453, lng: -83.04851528226311},
+		{lat: 29.36921909669666, lng: -86.01265780539265},
+		{lat: 28.713164501956673, lng: -88.17265026330453},
+		{lat: 28.023844131319155, lng: -94.85064974519342},
+		{lat: 25.391737219495525, lng: -96.59139002070575},
+		{lat: 21.133093489813568, lng: -96.33292037642163},
+		{lat: 19.344591710351963, lng: -94.82703731531285},
+		{lat: 19.614796249771974, lng: -91.36950799632218},
+		{lat: 21.153779278924457, lng: -90.19667771174079},
+		{lat: 21.703401055739732, lng: -86.07731160153789},
+		{lat: 16.097209979742512, lng: -87.98517776710075},
+		{lat: 15.35216527921149, lng: -82.16910715775401},
+		{lat: 10.438550492146923, lng: -83.23310724862645},
+		{lat: 9.081850667249821, lng: -80.31321920692119},
+		{lat: 9.543013625726395, lng: -78.51398965878973},
+		{lat: 8.993403147522951, lng: -76.67946563195132},
+		{lat: 12.505005710441813, lng: -73.11418963043317},
+		{lat: 10.657376200021766, lng: -62.664579503904115},
+		{lat: 17.58995893735642, lng: -62.83050781292737},
+		{lat: 23.484637805195977, lng: -69.9648035741764},
+		{lat: 27.095778587875968, lng: -74.98299107988969},
+		{lat: 27.42766517300344, lng: -78.8934384187028},
+		{lat: 24.255007630152335, lng: -80.10686803617499}
+	],
+	{
+		color: 'RGBA(0,255,255,0.4)'
+	});	
+	
+	
+	// capitals (points)
+	
+	var capitals = [
+		{lat: 45.25, lng: -76.08},
+		{lat: 38.89, lng: -77.08},
+		{lat: 19.39, lng: -99.28},
+		{lat: 23.05, lng: -82.4},
+		{lat: 14.62, lng: -90.5},
+		{lat: 13.69, lng: -89.2},
+		{lat: 9.08, lng: -79.5},
+		{lat: 10.46, lng: -66.9},
+		{lat: 4.6, lng: -74.2},
+		{lat: -12.05, lng: -77.0},
+		{lat: -15.72, lng:-48.0 },
+		{lat: -16.52, lng: -68.1 },
+	];
+	
+	for ( var i = 0; i < capitals.length; i++ ) {
+	
+		myearth.drawPoint(
+			capitals[i],
+			{
+				size: 1.8,
+				color: 'RGBA(0,150,0,1)'
+			}
+		);
+	
+	}
+	
+	
+	// apply the updated map
+	
+	myearth.updateMap();
+
+}
+
+
+
+</script>
+
+</head>
+<body>
+
+	<h1 style="padding-bottom: 1em;">Drawing on the Map</h1>
+	
+	<div id="wrapper">
+		See <a href="../docs/api/module-mapdraw.htm">MapDraw Module</a><br>
+		
+		&nbsp;<br>
+	
+		<button onclick=" drawMore(); ">Draw some more</button> &nbsp;
+		<button onclick=" myearth.redrawMap(); ">Restore map</button>
+	
+		<div id="myearth"></div>
+		
+	</div>
+	
+</body>
+</html>

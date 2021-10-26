@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>Draggable Objects</title>
+
+<link rel="stylesheet" href="../examples/assets/example.css">
+
+<script src="../miniature.earth.js"></script>
+<script src="../modules/miniature.earth.draggable.js"></script>
+
+<script>
+
+window.addEventListener( "earthjsload", function() {
+
+	var myearth = new Earth( "myearth", {
+		location: { lat: 20, lng: -90 }
+	} );
+	
+
+	myearth.addEventListener( "ready", function() {
+	
+	
+		var marker_shadow = this.addImage( {
+			color: 'black',
+			opacity: 1,
+			location : { lat: 40, lng: -74 },
+			scale: 0.05,
+			visible: false			
+		} );
+	
+		
+		// red marker
+		
+		marker = this.addMarker( {
+			mesh : ["Pin", "Needle"],
+			location : { lat: 40, lng: -74 },
+			hotspot : true
+		} );
+		
+		Earth.Draggable.enable( marker );
+				
+		marker.addEventListener( 'dragstart', function(){
+			this.animate('offset', 0.45, {duration: 200, easing: 'in-out-quad'});
+			
+			marker_shadow.location = this.location;
+			marker_shadow.visible = true;
+			marker_shadow.animate( 'opacity', 0.7, {duration: 200, easing: 'in-out-quad'} );
+			marker_shadow.animate( 'scale', 0.18, {duration: 200, easing: 'in-out-quad'} );
+		} );
+		
+		marker.addEventListener( 'dragmove', function(){
+			marker_shadow.location = this.location;
+		} );
+		
+		marker.addEventListener( 'dragend', function(){
+			this.animate('offset', 0, {duration: 200, easing: 'in-out-quad'});
+			
+			marker_shadow.animate( 'opacity', 1, {duration: 200, easing: 'in-out-quad'} );
+			marker_shadow.animate( 'scale', 0.05, { duration: 200, easing: 'in-out-quad', complete: function(){ this.visible = false; } } );
+			
+			document.getElementById('info').innerHTML = 'Marker dropped at:<br>' + JSON.stringify( this.location );
+		} );
+		
+		
+		
+		// blue sprite
+		
+		var sprite = this.addSprite( {
+			color: '#2549ff',
+			image: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMTIgNGM0LjQxMSAwIDggMy41ODkgOCA4cy0zLjU4OSA4LTggOC04LTMuNTg5LTgtOCAzLjU4OS04IDgtOHptMC0yYy01LjUyMyAwLTEwIDQuNDc3LTEwIDEwczQuNDc3IDEwIDEwIDEwIDEwLTQuNDc3IDEwLTEwLTQuNDc3LTEwLTEwLTEwem0wIDZjMi4yMDYgMCA0IDEuNzk0IDQgNHMtMS43OTQgNC00IDQtNC0xLjc5NC00LTQgMS43OTQtNCA0LTR6bTAtMmMtMy4zMTQgMC02IDIuNjg2LTYgNnMyLjY4NiA2IDYgNiA2LTIuNjg2IDYtNi0yLjY4Ni02LTYtNnptMCA0Yy0xLjEwNSAwLTIgLjg5Ni0yIDJzLjg5NSAyIDIgMiAyLS44OTYgMi0yLS44OTUtMi0yLTJ6Ii8+PC9zdmc+',
+			hotspot: true,
+			scale: 1.5,
+			location : { lat: 22, lng: -72 }
+		} );
+		
+		Earth.Draggable.enable( sprite );
+		
+		sprite.addEventListener( 'dragend', function(){
+			document.getElementById('info').innerHTML = 'Sprite dropped at:<br>' + JSON.stringify( this.location );
+		} );	
+	
+	
+	
+		// green image
+	
+		var image = this.addImage( {
+			color: '#30b81f',
+			image: sprite.image,
+			hotspot: true,
+			scale: 1.5,
+			location : { lat: 35, lng: -119 }
+		} );
+		
+		Earth.Draggable.enable( image );
+		
+		image.addEventListener( 'dragend', function(){
+			document.getElementById('info').innerHTML = 'Image dropped at:<br>' + JSON.stringify( this.location );
+		} );
+				
+
+		
+	} );	
+	
+
+} );
+
+</script>
+
+</head>
+<body>
+
+	<h1 style="padding-bottom:1em;">Draggable Objects</h1>
+	
+	<div id="info">
+		
+		<div id="info">See <a href="../docs/api/module-draggable.htm">Draggable Module</a></div>
+	
+		The objects are draggable!
+	</div>
+	
+	
+	<div id="wrapper">
+		<div id="myearth"></div>		
+	</div>
+	
+</body>
+</html>

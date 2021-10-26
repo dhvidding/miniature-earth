@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>Points Properties</title>
+
+<link rel="stylesheet" href="../assets/example.css">
+
+<script src="../../miniature.earth.js"></script>
+
+<style>
+
+.docs-tip {
+	transform: translate(-50%, 2em);
+}
+
+</style>
+
+<script>
+
+window.addEventListener( "earthjsload", function() {
+
+
+	myearth = new Earth( "myearth", {
+		location: { lat: 20, lng: -90 },
+		autoRotate : true
+	} );
+	
+	
+	myearth.addEventListener( "ready", function() {
+
+
+		// circles
+		var stars = this.addPoints( {
+			scale: 2,
+			points: [
+				{ location : { lat: 35.55229, lng:139.779999 }, offset: 0.5, color: '#00ff00' },
+				{ location : { lat: 21.31870079040527, lng:-157.921997070312 }, offset: 0.75, color: '#00ffff' },
+				{ location : { lat: 40.6398010, lng:-73.7789001 }, offset: 0.6, color: '#0000ff' },
+				{ location : { lat: 63.985000610352, lng:-22.605600357056 }, offset: 0.3, color: '#ffff00' },
+				{ location : { lat: 33.94250107, lng:-118.4079971 }, offset: 0.3, color: '#ff00ff' },
+				{ location : { lat: -12.0219, lng:-77.114304 }, offset: 0.4, color: '#ff00ff' },
+				{ location : { lat: 51.4706, lng:-0.461941 }, offset: 0.6, color: '#0000ff' },
+				{ location : { lat: -33.94609832763672, lng:151.177001953125 }, offset: 0.7, color: '#00ffff' },
+				{ location : { lat: 55.5914993286, lng:37.2615013123 }, offset: 0.5, color: '#ffff00' },
+			]
+		} );
+
+
+		// red stars
+		var stars = this.addPoints( {
+			points: [
+				{ location : { lat: 59.651901245117, lng: 17.918600082397 } },
+				{ location : { lat: 13.681099891662598, lng: 100.74700164794922}, scale: 1.5 },
+				{ location : { lat: 30.12190055847168, lng:31.40559959411621 }, scale: 1.5 },
+				{ location : { lat: -6.1255698204, lng: 106.65599823} },
+				{ location : { lat: 7.180759906768799, lng:79.88410186767578 }, scale: 1.5 },
+				{ location : { lat: -33.964801788, lng:18.601699829 }, scale: 1.5 },
+				{ location : { lat: 12.1889, lng: -68.95980}, scale: 1.5 },
+				{ location : { lat: 28.566499710083008, lng:77.1031036376 } },
+				{ location : { lat: 25.2527999878, lng:55.36439895 }},
+				{ location : { lat: -34.822, lng:-58.535 } },
+				{ location : { lat: 41.800277, lng:12.2388889 }, scale: 1.5 },
+				{ location : { lat: 22.308900833, lng:113.91500091 } }
+			],
+			color: 'red',
+			image: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMTIgLjI4OGwyLjgzMyA4LjcxOGg5LjE2N2wtNy40MTcgNS4zODkgMi44MzMgOC43MTgtNy40MTYtNS4zODgtNy40MTcgNS4zODggMi44MzMtOC43MTgtNy40MTYtNS4zODloOS4xNjd6Ii8+PC9zdmc+'
+		} );
+		
+		stars.animate( 'scale', 1.4, { duration: 600, easing: 'out-quad', loop: true, oscillate: true } );	
+
+
+	} );
+	
+	
+} );
+
+</script>
+
+</head>
+<body>
+	<h1>Points Properties</h1>
+	
+	<p>See <a href="../../docs/api/points.htm">Points API</a></p>
+	
+	<div id="wrapper">	
+	
+		<div id="myearth"></div>
+		
+	</div>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>Multi-Level Clustering</title>
+
+<link rel="stylesheet" href="../examples/assets/example.css">
+
+<script type="text/javascript" src="../modules/miniature.earth.clustering.js"></script>
+
+</head>
+<body>
+
+	<h1>Multi-Level Clustering</h1>
+	
+	
+	<script>
+	
+	var myearth;
+
+	/* load miniature.earth.js after the page is loaded. */
+
+	window.addEventListener( 'load', function() {
+		var script = document.createElement( "script" );
+		script.src = "../miniature.earth.js";
+		document.body.appendChild( script );	
+	} );
+
+
+	window.addEventListener( "earthjsload", function() {
+
+		/* setup earth */
+		
+		myearth = new Earth( "myearth", {
+			location: { lat: 30, lng: -95  },
+			/* more earth options here */
+		} );
+				
+		
+		myearth.addEventListener( "ready", function() {
+
+			// enable clustering
+			Earth.Clustering.enable( this );
+
+			
+			// WEST COAST
+			
+			west_coast = this.addMarker( {
+				mesh : "Pin3",
+				scale: 0.66,
+				hotspot : true
+			} );
+			
+			var children = [];
+			
+			// LA
+			children.push( this.addMarker( {
+				mesh : "Pin3",
+				location : { lat: 34.1, lng: -118.2 },
+				scale: 0.33,
+				hotspot : true
+			} ) );
+			
+			// SF
+			children.push( this.addMarker( {
+				mesh : "Pin3",
+				location : { lat: 37.8, lng: -122.5 },
+				scale: 0.33,
+				hotspot : true
+			} ) );
+			
+			// LV
+			children.push( this.addMarker( {
+				mesh : "Pin3",
+				location : { lat: 36.1, lng: -115.3 },
+				scale: 0.33,
+				hotspot : true
+			} ) );
+			
+			this.cluster( west_coast, children );
+			
+			
+			
+			
+			// EAST COAST NORTH
+			
+			
+			var east_coast_north = this.addMarker( {
+				mesh : "Pin3",
+				scale: 0.66,
+				hotspot : true
+			} );
+			
+			var children = [];
+			
+			// NYC
+			children.push( this.addMarker( {
+				mesh : "Pin3",
+				location : { lat: 40.6, lng: -74.1 },
+				scale: 0.33,
+				hotspot : true
+			} ) );
+			
+			// WDC
+			children.push( this.addMarker( {
+				mesh : "Pin3",
+				location : { lat: 38.8, lng: -77.1 },
+				scale: 0.33,
+				hotspot : true
+			} ) );
+			
+			this.cluster( east_coast_north, children );
+			
+			
+			
+			// EAST COAST SOUTH
+			
+			
+			var east_coast_south = this.addMarker( {
+				mesh : "Pin3",
+				scale: 0.66,
+				hotspot : true
+			} );
+			
+			var children = [];
+			
+			// Atlanta
+			children.push( this.addMarker( {
+				mesh : "Pin3",
+				location : { lat: 33.7, lng: -84.4 },
+				scale: 0.33,
+				hotspot : true
+			} ) );
+			
+			// Orlando
+			children.push( this.addMarker( {
+				mesh : "Pin3",
+				location : { lat: 28.4, lng: -81.4 },
+				scale: 0.33,
+				hotspot : true
+			} ) );
+			
+			// Miami
+			children.push( this.addMarker( {
+				mesh : "Pin3",
+				location : { lat: 25.7, lng: -80.2 },
+				scale: 0.33,
+				hotspot : true
+			} ) );
+			
+			this.cluster( east_coast_south, children );
+			
+			
+			
+			// EAST COAST (north + south)
+			
+			var east_coast = this.addMarker( {
+				mesh : "Pin3",
+				scale: 1,
+				hotspot : true
+			} );
+			
+			this.cluster( east_coast, [
+				east_coast_north,
+				east_coast_south
+			] );
+			
+		
+		} );
+	} );
+
+
+	</script>
+	
+	
+	<div style="max-width: 800px; margin: 2em auto;">
+		<div id="info">See <a href="../docs/api/module-clustering.htm">Clustering Module</a></div>
+		
+		Click the markers to expand the clusters.
+		
+		&nbsp; <br>
+		&nbsp; <br>
+
+		<button onclick=" west_coast.expand(); ">Expand West Coast</button>
+		<button onclick=" myearth.collapseAll(); ">Collapse All</button>
+		
+		<div id="myearth" class="earth-container"></div>
+
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>Country Hover</title>
+
+<link rel="stylesheet" href="assets/example.css">
+
+<script src="../miniature.earth.js"></script>
+
+<script>
+
+var myearth;
+var selected_countries = [];
+
+window.addEventListener( "earthjsload", function() {
+
+
+	myearth = new Earth( "myearth", {
+		mapBorderColor: '#ccc',
+		mapHitTest : true
+	} );
+	
+	
+	
+	var last_id = '';
+	
+	document.getElementById('myearth').addEventListener( 'mousemove', function( event ) {
+	
+		var location = myearth.getLocation( { x: event.pageX, y: event.pageY } );
+		var svg_id = myearth.hitTest( location );
+	
+		if ( ! svg_id || svg_id == 'SEA' ) {
+			myearth.mapStyles = '';
+		} else {
+			myearth.mapStyles = '#' + svg_id + ' { fill: #44cc44; }';
+		}
+		
+		if ( svg_id != last_id ) {
+			myearth.redrawMap();
+		}
+		
+		last_id = svg_id;
+		
+	} );
+		
+	document.getElementById('myearth').addEventListener( 'mouseout', function() {
+	
+		if ( ! last_id ) return;
+	
+		myearth.mapStyles = '';
+		myearth.redrawMap();
+
+		last_id = '';
+		
+	} );
+	
+	
+} );
+
+</script>
+
+</head>
+<body>
+	<h1 style="padding-bottom: 1em;">Country Hover</h1>
+	
+	<div id="wrapper">		
+		
+		<div id="myearth"></div>
+		
+	</div>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>ScrollSync with Page</title>
+
+<link rel="stylesheet" href="../examples/assets/example.css">
+
+<script type="text/javascript" src="../modules/miniature.earth.scrollsync.js"></script>
+
+<style>
+
+.section {
+	border: 8px #ddd solid;
+	margin: 40px 0;
+	padding: 10vh 8vw;
+	box-sizing: border-box;
+	font-size: 1.25vw;
+	max-width: 50%;
+	transition: border-color 0.3s ease;
+}
+.active {
+	border-color: green;
+}
+#earth-column {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 50%;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+	-webkit-flex-wrap: nowrap;
+	flex-wrap: nowrap;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-align-items: center;
+	align-items: center;
+}
+
+</style>
+
+<script>
+
+var myearth;
+
+/* load miniature.earth.js after the page is loaded. */
+
+window.addEventListener( 'load', function() {
+	var script = document.createElement( "script" );
+	script.src = "../miniature.earth.js";
+	document.body.appendChild( script );	
+} );
+
+
+window.addEventListener( "earthjsload", function() {
+
+	/* setup earth */
+	
+	myearth = new Earth( "myearth", {
+		location: { lat: 0, lng: 0  },
+		polarLimit : 1,
+		dragPolarLimit : 1,
+		dragMomentum : false
+		/* more earth options here */
+	} );
+	
+	
+	myearth.addEventListener( "ready", function() {
+		
+		var elements = [];
+		
+		// Markers
+		document.querySelectorAll('.section').forEach( function(item) {
+
+			var latlng = item.dataset.location.split(',');
+		
+			var marker = myearth.addMarker( {
+				location : { lat: latlng[0], lng: latlng[1] }				
+			} );
+		
+		
+			elements.push( {
+				element : item,
+				location : { lat: latlng[0], lng: latlng[1] },
+				marker : marker
+			} );
+		} );
+		
+		Earth.ScrollSync.enable(
+			myearth, 								// earth
+			document.documentElement,				// container
+			elements,								// elements
+			function(new_element, old_element) { 	// activate handler
+				if (new_element) {
+					new_element.marker.color = 'green';
+					new_element.element.classList.add('active');
+				}
+				if (old_element) {
+					old_element.marker.color = 'red';
+					old_element.element.classList.remove('active');
+				}
+			}
+		);
+		
+	
+	} );
+	
+	
+	
+} );
+
+
+</script>
+
+</head>
+<body>
+
+	<h1>ScrollSync with Page</h1>
+	
+	<p style="position:relative;z-index:100;">See <a href="../docs/api/module-scrollsync.htm">ScrollSync Module</a><br>
+	Scroll the page to rotate the earth or drag the earth to scroll the page.</p>
+	
+	
+	<div id="earth-column">
+		
+		<div id="myearth" class="earth-container" style="width: 100%;"></div>		
+
+	</div>
+	
+	<div style="height:5vh"></div>
+	
+	<div class="section" data-location="12.23,5">
+		Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.<br><br>
+		Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br><br>
+		Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+	</div>
+	
+	<div class="section" data-location="-12.23,-25">
+		Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+	</div>
+	
+	<div class="section" data-location="-18.23,-35">
+		Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br><br>
+		Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+	</div>
+	
+	<div class="section" data-location="-12.23,-50">
+		Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.<br><br>
+		Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br><br>
+		Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+	</div>
+	
+	<div style="height:25vh"></div>
+	
+	<div style="position:fixed;top:50%;left:1em;right:1em;border-top:1px cyan solid;"></div>
+	
+</body>
+</html>

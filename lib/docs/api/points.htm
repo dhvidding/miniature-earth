@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>Points API</title>
+
+<link rel="stylesheet" href="../assets/docs.css">
+<script src="../assets/docs.js"></script>
+
+</head>
+<body  class="has-index">
+	<div id="wrapper">
+		
+		<h1>Points API</h1>
+		
+		<p style="text-align:left; font-size:1.2em; max-width: 40em;">A points object efficiently draws a large amount of small sprites.</p>
+		<p style="text-align:left; font-size:1.2em; max-width: 40em;"><a href="../../examples/properties/points-properties.htm"><strong>Example: Points Properties</strong></a></p>
+		
+		
+		<div id="docs">
+		
+			<h2>Add Points</h2>
+			
+			<p>Use <em>EarthInstance</em>.<a href="earth.htm#addpoints">addPoints( properties )</a></p>
+<code><pre>
+var mypoints = myearth.addPoints( {
+	points: [
+		{ location: {lat: 12.5, lng: 18.7}, scale: 1.5, offset: 0.25 },
+		{ location: {lat: 19.3, lng: 10.2}, scale: 1.3 },
+		{ location: {lat: 14.9, lng: 15.1}, scale: 1.3, opacity: 0.5 }
+	],
+	color: '#ff0000',
+	opacity: 0.75
+} );
+</pre></code>
+
+		
+			<h2 id="prop">Points Properties</h2>
+			
+			<h3>points <var>(array)</var> <mark class="init-only"></mark></h3>
+			<p style="margin-bottom:-1em">An array of objects with the following properties:</p>
+			
+			<div class="advanced">
+				<h3 class="prop-group">location <var>(lat/lng)</var></h3>
+				<p>Location of the point.</p>
+				
+				<h3 class="prop-group">offset <var>(float)</var></h3>
+				<p class="default-value"><samp>0.1</samp></p>
+				<p style="margin-top: -0.5em;">Distance to the earth surface.</p>
+				
+				<h3 class="prop-group">scale <var>(float)</var></h3>
+				<p class="default-value"><samp>1</samp></p>
+				<p>Size of the point.</p>
+				
+				<h3 class="prop-group">color</var></h3>
+				<p class="default-value"><samp>#FFFFFF</samp></p>
+				<p style="margin-top: -0.5em;">The color is multiplied to the image. If you want to tint the image exactly to the specified color, provide a white image or use <em>imageAlphaOnly: true</em>.</p>
+				
+				<h3 class="prop-group">opacity <var>(float)</var></h3>
+				<p class="default-value"><samp>1</samp></p>
+				<p class="value-range"><samp>0.0 - 1.0</samp></p>
+			
+			</div><!--advanced-->
+
+			
+			<h3>scale <var>(float)</var> <mark class="animatable"></mark></h3>
+			<p class="default-value"><samp>1</samp></p>
+			<p>This value is multiplied to the <em>scale</em> value of all points.</p>
+			
+			<h3 class="prop-group">color <mark class="animatable"></mark></h3>
+			<p class="default-value"><samp>#FFFFFF</samp></p>
+			<p>This value is multiplied to the <em>color</em> value of all points.</p>
+			
+			<h3 class="prop-group">opacity <var>(float)</var> <mark class="animatable"></mark></h3>
+			<p class="default-value"><samp>1</samp></p>
+			<p class="value-range"><samp>0.0 - 1.0</samp></p>
+			<p>This value is multiplied to the <em>opacity</em> value of all points.</p>
+			
+			
+			<h3>image <var>(url string)</var> <mark class="init-only"></mark></h3>
+			<p class="default-value"><samp>dataURI of a white circle</samp></p>
+			<p>Provide a URL to an image from the same domain or use a dataURI.<br>
+			SVG files are recommended but it is also possible to use PNG, GIF or JPG files.<br>
+			<a href="../tools/get-image-as-datauri.htm">Tool: Get Image as dataURI</a><br>
+			
+			<div class="advanced">
+			
+				<h3>imageAlphaOnly <var>(float)</var> <mark class="init-only"></mark> </h3>
+				<p class="default-value"><samp>false</samp></p>
+				<p>Set to <em>true</em>, to load your <em>image</em> without colors (completely white), so can you can tint it with the <em>color</em> property.</p>
+				
+			</div><!--advanced-->
+			
+
+			<h3>visible <var>(boolean)</var></h3>
+			<p class="default-value"><samp>true</samp></p>
+			
+			
+			<h3>Advanced:</h3>
+
+			<div class="advanced">
+
+				<h3>earth <var>(EarthInstance)</var> <mark class="read-only"></mark></h3>
+				<p>Reference to the <em>EarthInstance</em>.</p>
+				
+				<h3>object3d <var>(THREE.Object3D)</var></h3>
+				<p><a href="https://threejs.org/docs/">About THREE.js</a></p>
+
+			</div><!--advanced-->
+			
+			&nbsp;
+			
+			<div class="hint">
+				You can add custom properties that are copied over to the <em>PointsInstance</em>.
+			</div>
+			
+			
+			<h2>Points Methods</h2>
+			
+				<h3 id="animate">animate( <var>property</var>, <var>value</var>, <var>animationProperties</var> ) <small>returns <em>AnimationInstance</em></small></h3>
+				<dl>
+				  <dt>property</dt><dd>Name of the animatable property (String)</dd>
+				  <dt>value</dt><dd>Target value</dd>
+				  <dt>animationProperties</dt><dd>Object of <a href="animation.htm#prop">animation properties</a></dd>
+				</dl>
+				<p><a href="../../examples/properties/animatable-properties.htm">Example: Animatable Properties</a></p>
+
+
+				<h3 id="stopallanimations">stopAllAnimations( <var>triggerComplete</var>, <var>jumpToEnd</var> ) </h3>
+				<dl>
+				  <dt>triggerComplete</dt><dd>(boolean) default: false | Calls the <em>complete</em> functions</dd>
+				  <dt>jumpToEnd</dt><dd>(boolean) default: false | Sets the properties immediately to their end values</a></dd>
+				</dl>
+
+				<p>Stops all animations of this object. To stop a specific animation use <em>AnimationInstance</em>.<a href="animation.htm#stop">stop()</a></p>
+
+				<h3>remove( )</h3>
+				<p>Remove all points permanently.</p>
+				
+		
+		</div><!--docs-->
+		
+	</div>
+</body>
+</html>

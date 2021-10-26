@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>Normal Map</title>
+
+<link rel="stylesheet" href="../assets/example.css">
+
+<script src="../../miniature.earth.js"></script>
+<script src="../../modules/miniature.earth.materials.js"></script>
+
+<script>
+
+
+window.addEventListener( "earthjsload", function() {
+
+
+	myearth = new Earth( "myearth", {
+		location: { lat: 0, lng: 0 },
+		light: 'sun',
+		lightAmbience: 0.58,
+		lightIntensity: 0.6,
+		shininess: 0.3,
+		sunDirection : { x : -0.4, y : 0 },
+		mapLandColor : '#9d5d23',
+		mapSeaColor : 'transparent',
+		innerOpacity: 0.4,
+		transparent:true
+	} );
+	
+	
+	
+	myearth.addEventListener( "ready", function() {
+	
+		Earth.Materials.enable( this );
+		this.loadNormalMap( '../assets/normals.jpg', 0.8 );	
+		
+		
+		// add a second light source
+		
+		var directionalLight = new THREE.DirectionalLight( 0xff8f63, 0.25 );
+		this.camera.add( directionalLight );
+		directionalLight.position.set(30, 20, 0 );
+		
+	} );
+
+	
+} );
+
+
+
+
+</script>
+
+</head>
+<body style="background-color:#222; color: #fff">
+
+	<h1 style="padding-bottom: 1em;">Normal Map</h1>
+	
+	<p>See <a href="../../docs/api/module-materials.htm" style="color:inherit">Materials Module</a></p>
+	
+	<div id="wrapper">
+	
+		<div id="myearth"></div>
+		
+	</div>
+	
+</body>
+</html>

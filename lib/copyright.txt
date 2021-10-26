@@ -1,0 +1,6 @@
+Miniature Earth v3.1
+https://miniature.earth/
+
+Copyright © 2018-2020 Ulf Paule (Miniature Earth)
+Copyright © 2010-2020 three.js authors (three.js)
+Copyright © 2015-2016 Jaume Sanchez Elias (MeshLine)

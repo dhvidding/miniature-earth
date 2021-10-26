@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>Draggable Module</title>
+
+<link rel="stylesheet" href="../assets/docs.css">
+<script src="../assets/docs.js"></script>
+
+</head>
+<body  class="has-index">
+	<div id="wrapper">
+		
+		<h1>Draggable Module</h1>
+		
+		<p style="text-align:left; font-size:1.2em; max-width: 40em;">Makes Markers, Sprites and Images draggable.</p>
+		<p style="text-align:left; font-size:1.2em; max-width: 40em;"><a href="../../examples/draggable-objects.htm"><strong>Example: Draggable Objects</strong></a></p>
+		
+		
+		<div id="docs">
+		
+			<h2>Usage</h2>
+			
+			<p>Load the file <strong>/modules/miniature.earth.draggable.js</strong> or copy the code to your script and customize it to your needs.</p>
+			
+
+
+			<h2>Methods</h2>
+			
+				<h3 id="group">Earth.Draggable.enable( <var>object</var> ) </h3>
+				<dl>
+				  <dt>object</dt><dd>(Marker/Sprite/Image) This object becomes draggable.</dd>
+				</dl>
+<code><pre>
+var my_draggable_marker = myearth.addMarker( {
+	location : { lat: -25, lng: 14 },
+	<strong>hotspot : true</strong>
+} );
+
+<strong>Earth.Draggable.enable( my_draggable_marker );</strong>
+</pre></code>
+
+				
+				<div class="hint">
+					The objects must be created with <em>hotspot</em>: true
+				</div>
+
+
+			<h2>Events</h2>
+
+			<h3>dragstart, dragmove, dragend</h3>
+			&nbsp;
+<code><pre>
+my_draggable_marker.addEventListener( 'dragend', function(){
+	console.log( 'Object dropped at: ' + JSON.stringify(this.location) );
+} );
+</pre></code>
+
+									
+		&nbsp;
+		
+		</div><!--docs-->
+		
+	</div>
+</body>
+</html>

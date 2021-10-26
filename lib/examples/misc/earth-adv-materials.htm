@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>Materials Module</title>
+
+<link rel="stylesheet" href="../assets/example.css">
+
+<script src="../../miniature.earth.js"></script>
+<script src="../../modules/miniature.earth.materials.js"></script>
+
+<script>
+
+
+window.addEventListener( "earthjsload", function() {
+
+
+	myearth = new Earth( "myearth", {
+		location: { lat: 0, lng: 0 },
+		light: 'sun',
+		lightAmbience: 0.8,
+		lightIntensity: 0.5,
+		sunDirection : { x : -1.0, y : 0 },
+		shininess: 0.2,
+		mapImage : '../assets/map.jpg',
+		quality: 4,
+		autoRotate : true
+	} );
+	
+	
+	myearth.addEventListener( "ready", function() {
+	
+		Earth.Materials.enable( this );
+		
+		this.loadNormalMap( '../assets/normals.jpg', 0.8 );
+		
+		this.loadDisplacementMap( '../assets/displacement.jpg', 0.6 );
+
+		this.addMapLayer( '../assets/clouds.jpg', 0.5, function( layer ){
+			
+			// move the cloud layer
+			myearth.addEventListener( "update", function() {
+				layer.rotateY( myearth.deltaTime / -80000 );
+			} );
+			
+		}, true);
+		
+		
+	} );
+	
+	
+} );
+
+
+</script>
+
+</head>
+<body style="background-color:#fff;">
+
+	<h1 style="padding-bottom: 1em;">Materials Module</h1>
+	
+	<p>Earth material with normal map, displacement map and a cloud layer.<br>
+	See <a href="../../docs/api/module-materials.htm" style="color:inherit">Materials Module</a></p>
+	
+	<div id="wrapper">
+	
+		<div id="myearth"></div>
+		
+	</div>
+	
+</body>
+</html>

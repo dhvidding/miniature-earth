@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<title>Materials Module</title>
+
+<link rel="stylesheet" href="../assets/docs.css">
+<script src="../assets/docs.js"></script>
+
+</head>
+<body  class="has-index">
+	<div id="wrapper">
+		
+		<h1>Materials Module</h1>
+		
+		<p style="text-align:left; font-size:1.2em; max-width: 40em;">Advanced material options for the earth surface.</p>
+		<p style="text-align:left; font-size:1.2em; max-width: 40em;"><a href="../../examples/misc/earth-adv-materials.htm"><strong>Example: Materials</strong></a><br>
+		<a href="../../examples/misc/earth-adv-normal-map.htm"><strong>Example: Normal Map</strong></a></p>
+		
+		
+		<div id="docs">
+		
+			<h2>Usage</h2>
+			
+			<p>Load the file <strong>/modules/miniature.earth.materials.js</strong> or copy the code to your script and customize it to your needs.</p>
+			
+				<h3>Earth.Materials.enable.enable( <var>earth</var> )</h3>
+				&nbsp;
+<code><pre>
+myearth.addEventListener( 'ready', function( event ) {
+	
+	Earth.Materials.enable( this );
+	this.loadNormalMap( 'normals.jpg', 0.8 );
+	
+};
+</pre></code>
+
+			<h2>Methods</h2>
+			
+
+
+
+				<h3><em>EarthInstance</em>.loadNormalMap( <var>url</var>, <var>strength</var>, <var>complete</var> )</h3>
+				<dl>
+				  <dt>url</dt><dd>(string) URL to the normal map</dd>
+				  <dt>strength</dt><dd>(float) Strength of the effect | default: 1.0</a></dd>
+				  <dt>complete</dt><dd>(function) Load complete callback</a></dd>
+				</dl>
+				
+				<p>Adds details to earth surface. The effect is only visible if  earth <em>light = 'sun'</em> or a light is added to the scene.</p>
+				
+				
+				<h3 class="prop-group"><em>EarthInstance</em>.loadDisplacementMap( <var>url</var>, <var>strength</var>, <var>complete</var> )</h3>
+				<dl>
+				  <dt>url</dt><dd>(string) URL to the displacement map</dd>
+				  <dt>strength</dt><dd>(float) The height of the mountains | default: 1.0</a></dd>
+				  <dt>complete</dt><dd>(function) Load complete callback</a></dd>
+				</dl>
+				
+				<p>Changes the geometry of the earth surface.</p>
+				
+
+
+				<h3><em>EarthInstance</em>.addMapLayer( <var>url</var>, <var>offset</var>, <var>complete</var>, <var>alpha_only</var>, <var>color</var> )</h3>
+				<dl>
+				  <dt>url</dt><dd>(string) URL to the image</dd>
+				  <dt>offset</dt><dd>(float) Distance to the earth surface</dd>
+				  <dt>complete</dt><dd>(function) Load complete callback</a></dd>
+				  <dt>alpha_map</dt><dd>(boolean) If true, the image is treated as alpha map (dark colors become transparent) | default: false</dd>
+				  <dt>color</dt><dd>(color) The color is multiplied to the image | default: #FFFFFF</dd>
+				</dl>
+				<p>Adds a sphere with a transparent image around the earth, for example to display a layer of clouds.</p>
+				
+
+		&nbsp;
+		
+		</div><!--docs-->
+		
+	</div>
+</body>
+</html>
