@@ -4,7 +4,8 @@
   "description": "",
   "main": "dist/index_bundle.js",
   "scripts": {
-    "build": "webpack",
+    "build:dev": "webpack --config ./webpack.dev.js",
+    "build": "webpack --config ./webpack.prod.js",
     "start": "browser-sync start --server"
   },
   "keywords": [],

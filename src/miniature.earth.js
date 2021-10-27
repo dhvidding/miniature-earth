@@ -1910,6 +1910,7 @@ Earth.getTexture = function ( src, resolution, alphaOnly ) {
 	  
 	};
 
+  img.crossOrigin = 'Anonymous';
 	img.src = src;
 	
 	
